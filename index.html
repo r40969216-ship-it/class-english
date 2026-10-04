@@ -1,0 +1,114 @@
+from pathlib import Path
+
+html = r'''<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Class English — سامانه آموزش زبان</title>
+<style>
+:root{--bg:#f6f7fb;--surface:#fff;--text:#182033;--muted:#75809a;--line:#e7eaf2;--p:#625cf5;--p2:#8a68ff;--green:#1fb879;--orange:#f2a93b;--red:#e85d6a;--shadow:0 14px 40px rgba(31,37,68,.08)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Tahoma,Arial,sans-serif}
+button,input,select{font:inherit}button{cursor:pointer;border:0}.app{min-height:100vh;display:flex}.side{width:255px;position:fixed;inset:0 0 0 auto;background:var(--surface);border-left:1px solid var(--line);padding:20px 15px;z-index:5}.brand{display:flex;gap:10px;align-items:center;font-weight:900;font-size:20px;padding:8px}.brand b{width:42px;height:42px;display:grid;place-items:center;border-radius:14px;color:#fff;background:linear-gradient(135deg,var(--p),var(--p2))}
+nav{margin-top:25px}nav button{display:block;width:100%;text-align:right;background:transparent;color:var(--muted);padding:13px 14px;border-radius:12px;margin:5px 0}nav button.active,nav button:hover{background:#f0efff;color:var(--p);font-weight:bold}.sideBottom{position:absolute;bottom:18px;right:15px;left:15px;padding:13px;border-radius:15px;background:#f7f7ff}
+main{margin-right:255px;width:calc(100% - 255px);padding:26px;max-width:1450px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}.top h1{margin:0;font-size:26px}.top p{margin:5px 0 0;color:var(--muted)}.chips{display:flex;gap:9px}.chip{background:#fff;border:1px solid var(--line);border-radius:12px;padding:9px 12px}.hamb{display:none}
+.view{display:none}.view.active{display:block}.hero{background:linear-gradient(135deg,#5752df,#8064ff);color:#fff;border-radius:24px;padding:28px;display:flex;justify-content:space-between;align-items:center;box-shadow:var(--shadow)}.hero h2{margin:0 0 8px;font-size:26px}.hero p{margin:0 0 18px;opacity:.9}.hero .emoji{font-size:72px}.btn{padding:11px 16px;border-radius:11px;font-weight:bold}.primary{background:#fff;color:#514bd7}.purple{background:var(--p);color:#fff}.soft{background:#efefff;color:var(--p)}.danger{background:#fff0f2;color:#cf3d4c}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:18px}.card{background:#fff;border:1px solid var(--line);border-radius:19px;padding:19px;box-shadow:0 5px 22px rgba(40,45,80,.035)}.card h3{margin:0 0 8px}.muted{color:var(--muted)}.bar{height:9px;background:#eceef5;border-radius:20px;overflow:hidden}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--p),var(--p2));border-radius:20px}.section{display:flex;justify-content:space-between;align-items:center;margin:25px 0 13px}.section h2{margin:0}
+.units{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.unit{min-height:180px}.unitIcon{font-size:34px}.unit .tag{display:inline-block;padding:5px 8px;border-radius:8px;background:#f1f2f8;color:var(--muted);font-size:11px}.unit.lock{opacity:.55}
+.table{width:100%;border-collapse:collapse}.table th,.table td{text-align:right;padding:12px;border-bottom:1px solid var(--line)}.student{display:flex;align-items:center;gap:10px}.avatar{width:36px;height:36px;border-radius:12px;display:grid;place-items:center;background:#eeeefe;color:var(--p);font-weight:bold}
+.form{display:grid;gap:12px}.form input,.form select{padding:12px;border:1px solid var(--line);border-radius:11px;outline:none}.form input:focus,.form select:focus{border-color:var(--p)}
+.login{max-width:560px;margin:35px auto}.login .logoBig{text-align:center;font-size:58px}.role{display:flex;gap:10px;margin:15px 0}.role button{flex:1;padding:12px;border-radius:11px;background:#f2f3f8;color:var(--muted)}.role button.active{background:#efefff;color:var(--p);font-weight:bold}
+.lesson{max-width:850px;margin:auto}.question{font-size:22px;line-height:1.8}.option{width:100%;padding:14px;margin:7px 0;text-align:right;border:2px solid var(--line);background:#fff;border-radius:12px}.option.correct{border-color:var(--green);background:#edfff7}.option.wrong{border-color:var(--red);background:#fff1f3}
+.notice{padding:12px;border-radius:12px;background:#fff8e8;color:#8a6117;margin-top:12px}.success{background:#ebfff6;color:#117b52}.empty{text-align:center;padding:35px;color:var(--muted)}
+@media(max-width:900px){.side{transform:translateX(100%);transition:.2s}.side.open{transform:none}.hamb{display:block;background:#fff;border:1px solid var(--line);padding:9px;border-radius:10px}.app main{margin-right:0;width:100%;padding:17px}.chips{display:none}.grid,.units{grid-template-columns:1fr}.hero .emoji{display:none}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="side" id="side">
+ <div class="brand"><b>CE</b> Class English</div>
+ <nav>
+  <button class="active" data-view="home">🏠 داشبورد</button>
+  <button data-view="courses">📚 دوره‌ها</button>
+  <button data-view="class">👥 کلاس من</button>
+  <button data-view="assignments">📝 تکالیف</button>
+  <button data-view="exams">🎯 آزمون‌ها</button>
+  <button data-view="vocab">📖 لغات</button>
+  <button data-view="progress">📊 پیشرفت</button>
+  <button data-view="settings">⚙️ تنظیمات</button>
+ </nav>
+ <div class="sideBottom">👤 <b id="userName">زبان‌آموز</b><br><small class="muted" id="roleText">دانش‌آموز • A1</small></div>
+</aside>
+
+<main>
+<header class="top"><div><button class="hamb" onclick="side.classList.toggle('open')">☰</button><h1 id="pageTitle">داشبورد</h1><p id="pageSub">آموزش انگلیسی برای کلاس شما</p></div><div class="chips"><span class="chip">🔥 <b id="streak">1</b> روز</span><span class="chip">⭐ <b id="xp">0</b> XP</span></div></header>
+
+<section id="home" class="view active">
+ <div class="hero"><div><h2>به کلاس انگلیسی خوش آمدی 👋</h2><p>از مسیر A1 شروع کن و قدم‌به‌قدم مهارت‌های زبانت را بساز.</p><button class="btn primary" onclick="openUnit(0)">شروع درس امروز</button></div><div class="emoji">🎓</div></div>
+ <div class="grid">
+  <div class="card"><h3>🎯 هدف امروز</h3><p class="muted">۱۰ دقیقه تمرین</p><div class="bar"><i id="dailyBar" style="width:0%"></i></div><p><b id="daily">0 / 10 دقیقه</b></p></div>
+  <div class="card"><h3>📈 سطح</h3><h2 style="margin:5px 0">A1 · Beginner</h2><div class="bar"><i id="courseBar" style="width:0%"></i></div><p><b id="percent">0%</b> از دوره</p></div>
+  <div class="card"><h3>🏫 کلاس فعال</h3><h2 style="margin:5px 0">English A1</h2><p class="muted">کلاس نمونه برای شروع پروژه</p></div>
+ </div>
+ <div class="section"><h2>مسیر این ترم</h2><button class="btn soft" onclick="go('courses')">همه درس‌ها</button></div>
+ <div class="units" id="homeUnits"></div>
+</section>
+
+<section id="courses" class="view"><div class="section"><h2>📚 دوره A1</h2><span class="muted">Beginner</span></div><div class="units" id="units"></div></section>
+
+<section id="class" class="view"><div class="section"><h2>👥 کلاس من</h2><button class="btn purple" onclick="alert('در نسخه آنلاین، کد کلاس از پنل معلم ساخته و اینجا وارد می‌شود.')">+ پیوستن با کد</button></div><div class="card"><h3>English A1</h3><p class="muted">مدرس: Teacher Demo</p><div class="notice success">کلاس فعال است. تکالیف و آزمون‌های این کلاس از همین‌جا نمایش داده می‌شوند.</div></div></section>
+
+<section id="assignments" class="view"><div class="section"><h2>📝 تکالیف</h2></div><div class="card"><table class="table"><tr><th>تکلیف</th><th>مهلت</th><th>وضعیت</th></tr><tr><td>Unit 1 Vocabulary</td><td>امروز</td><td><span class="tag">در انتظار</span></td></tr><tr><td>معرفی خود</td><td>فردا</td><td>در انتظار</td></tr></table></div></section>
+
+<section id="exams" class="view"><div class="section"><h2>🎯 آزمون‌ها</h2></div><div class="grid"><div class="card"><h3>آزمون Unit 1</h3><p class="muted">۱۰ سؤال · Vocabulary + Grammar</p><button class="btn purple" onclick="startQuiz()">شروع آزمون</button></div><div class="card"><h3>آزمون تعیین سطح</h3><p class="muted">برای تعیین سطح اولیه</p><button class="btn soft" onclick="alert('این بخش در مرحله بعد به آزمون چندمرحله‌ای تبدیل می‌شود.')">شروع</button></div></div></section>
+
+<section id="vocab" class="view"><div class="section"><h2>📖 واژگان</h2></div><div class="card"><input id="search" oninput="renderVocab()" placeholder="جستجوی کلمه..." style="width:100%;padding:12px;border:1px solid var(--line);border-radius:11px"><div id="vocabList"></div></div></section>
+
+<section id="progress" class="view"><div class="section"><h2>📊 پیشرفت من</h2></div><div class="grid"><div class="card"><h3>XP</h3><h1 id="pXp">0</h1></div><div class="card"><h3>درس کامل‌شده</h3><h1 id="pDone">0</h1></div><div class="card"><h3>درصد دوره</h3><h1 id="pPct">0%</h1></div></div><div class="card" style="margin-top:18px"><h3>مهارت‌ها</h3><p>Vocabulary</p><div class="bar"><i id="vbar" style="width:8%"></i></div><p>Grammar</p><div class="bar"><i style="width:5%"></i></div><p>Listening</p><div class="bar"><i style="width:3%"></i></div><p>Speaking</p><div class="bar"><i style="width:2%"></i></div></div></section>
+
+
+
+<section id="settings" class="view"><div class="section"><h2>⚙️ تنظیمات</h2></div><div class="card"><div class="form"><label>نام نمایشی</label><input id="nameInput" value="زبان‌آموز"><button class="btn purple" onclick="saveName()">ذخیره</button><button class="btn danger" onclick="resetApp()">پاک کردن پیشرفت این دستگاه</button></div></div></section>
+
+<section id="lesson" class="view"><div class="lesson"><div class="card" id="lessonBox"></div></div></section>
+<section id="quiz" class="view"><div class="lesson"><div class="card" id="quizBox"></div></div></section>
+</main></div>
+
+<script>
+const units=[
+ {t:"Greetings",fa:"سلام و احوالپرسی",i:"👋",d:"Hello, Hi, Good morning",w:[["Hello","سلام"],["Hi","سلام / درود"],["Good morning","صبح بخیر"],["Goodbye","خداحافظ"]]},
+ {t:"Introducing Yourself",fa:"معرفی خود",i:"🙋",d:"Name, age and country",w:[["My name is...","اسم من ... است"],["Nice to meet you.","از آشنایی با شما خوشحالم"],["I am from...","من اهل ... هستم"],["How are you?","حالت چطور است؟"]]},
+ {t:"Numbers",fa:"اعداد",i:"🔢",d:"Numbers 1–20",w:[["One","یک"],["Two","دو"],["Three","سه"],["Ten","ده"]]},
+ {t:"Family",fa:"خانواده",i:"👨‍👩‍👧",d:"Family members",w:[["Mother","مادر"],["Father","پدر"],["Brother","برادر"],["Sister","خواهر"]]},
+ {t:"Colors",fa:"رنگ‌ها",i:"🎨",d:"Common colors",w:[["Red","قرمز"],["Blue","آبی"],["Green","سبز"],["Yellow","زرد"]]},
+ {t:"Daily Routine",fa:"کارهای روزانه",i:"⏰",d:"Everyday actions",w:[["Wake up","بیدار شدن"],["Go to school","به مدرسه رفتن"],["Study","درس خواندن"],["Sleep","خوابیدن"]]},
+ {t:"Present Simple",fa:"حال ساده",i:"📐",d:"I work, you play...",w:[["I work.","من کار می‌کنم."],["I study.","من درس می‌خوانم."],["He plays.","او بازی می‌کند."],["Do you...?","آیا تو ...؟"]]},
+ {t:"Food & Drinks",fa:"غذا و نوشیدنی",i:"🍎",d:"Food vocabulary",w:[["Water","آب"],["Bread","نان"],["Apple","سیب"],["Milk","شیر"]]},
+ {t:"Places",fa:"مکان‌ها",i:"📍",d:"School, home, park...",w:[["School","مدرسه"],["Home","خانه"],["Park","پارک"],["Shop","فروشگاه"]]}
+];
+let st=JSON.parse(localStorage.getItem("classEnglish"))||{done:[],xp:0,minutes:0,name:"زبان‌آموز",streak:1};
+const titles={home:"داشبورد",courses:"دوره‌ها",class:"کلاس من",assignments:"تکالیف",exams:"آزمون‌ها",vocab:"لغات",progress:"پیشرفت",settings:"تنظیمات",lesson:"درس",quiz:"آزمون"};
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>go(b.dataset.view,b));
+function go(id,btn){document.querySelectorAll(".view").forEach(x=>x.classList.remove("active"));document.getElementById(id).classList.add("active");document.getElementById("pageTitle").textContent=titles[id]||"Class English";document.getElementById("side").classList.remove("open");document.querySelectorAll("nav button").forEach(x=>x.classList.remove("active"));if(btn)btn.classList.add("active");if(id==="vocab")renderVocab()}
+function save(){localStorage.setItem("classEnglish",JSON.stringify(st));update()}
+function update(){let p=Math.round(st.done.length/units.length*100);document.getElementById("xp").textContent=st.xp;document.getElementById("streak").textContent=st.streak;document.getElementById("daily").textContent=Math.min(10,st.minutes)+" / 10 دقیقه";document.getElementById("dailyBar").style.width=Math.min(100,st.minutes*10)+"%";document.getElementById("courseBar").style.width=p+"%";document.getElementById("percent").textContent=p+"%";document.getElementById("pXp").textContent=st.xp;document.getElementById("pDone").textContent=st.done.length;document.getElementById("pPct").textContent=p+"%";document.getElementById("userName").textContent=st.name;document.getElementById("nameInput").value=st.name;renderUnits()}
+function renderUnits(){
+ const make=(l,i)=>`<div class="card unit ${i>st.done.length?"lock":""}"><div class="unitIcon">${l.i}</div><span class="tag">Unit ${i+1}</span><h3>${l.fa}</h3><p class="muted">${l.d}</p><div class="bar"><i style="width:${st.done.includes(i)?100:0}%"></i></div><button class="btn ${st.done.includes(i)?"soft":"purple"}" style="margin-top:12px" onclick="openUnit(${i})">${st.done.includes(i)?"مرور":"شروع درس"}</button></div>`;
+ document.getElementById("units").innerHTML=units.map(make).join("");document.getElementById("homeUnits").innerHTML=units.slice(0,3).map(make).join("");
+}
+function openUnit(i){let l=units[i];go("lesson");document.getElementById("lessonBox").innerHTML=`<div style="text-align:center;font-size:48px">${l.i}</div><h1>${l.fa}</h1><p class="muted">${l.d}</p><hr style="border:0;border-top:1px solid var(--line)">${l.w.map(w=>`<div class="card" style="box-shadow:none;background:#f9f9fd;margin:10px 0;display:flex;justify-content:space-between;align-items:center"><div><b style="font-size:20px">${w[0]}</b><br><span class="muted">${w[1]}</span></div><button class="btn soft" onclick="speak('${w[0]}')">🔊 تلفظ</button></div>`).join("")}<div class="notice">💡 نکته: کلمه‌ها را با صدای بلند تکرار کن و بعد وارد تمرین شو.</div><button class="btn purple" style="width:100%;margin-top:14px" onclick="unitQuiz(${i})">شروع تمرین Unit ${i+1} ←</button>`}
+function unitQuiz(i){go("quiz");let l=units[i],q=l.w[1];document.getElementById("quizBox").innerHTML=`<h2>🧠 تمرین ${l.fa}</h2><p class="question">معنی «${q[0]}» چیست؟</p><div id="opts">${[q[1],l.w[0][1],l.w[2][1],l.w[3][1]].sort(()=>Math.random()-.5).map((x,k)=>`<button class="option" onclick="checkAnswer(this,'${q[1].replace(/'/g,"\\'")}',${i})">${x}</button>`).join("")}</div><p id="quizMsg"></p>`}
+function checkAnswer(btn,correct,i){document.querySelectorAll(".option").forEach(x=>x.disabled=true);if(btn.textContent===correct){btn.classList.add("correct");document.getElementById("quizMsg").innerHTML='<div class="notice success">✅ عالی! پاسخ درست بود. +20 XP</div>';if(!st.done.includes(i))st.done.push(i);st.xp+=20;st.minutes+=2;setTimeout(()=>{save();openUnit(i)},700)}else{btn.classList.add("wrong");document.getElementById("quizMsg").innerHTML='<div class="notice">❌ دوباره درس را مرور کن و امتحان کن.</div>';st.minutes++;save()}}
+function startQuiz(){unitQuiz(Math.min(st.done.length,units.length-1))}
+function speak(t){if(window.speechSynthesis){speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(t);u.lang="en-US";u.rate=.82;speechSynthesis.speak(u)}}
+function renderVocab(){let q=(document.getElementById("search")?.value||"").toLowerCase(),a=units.flatMap(x=>x.w).filter(x=>(x[0]+" "+x[1]).toLowerCase().includes(q));document.getElementById("vocabList").innerHTML=a.map(x=>`<div style="padding:13px 2px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between"><span><b>${x[0]}</b><br><small class="muted">${x[1]}</small></span><button class="btn soft" onclick="speak('${x[0]}')">🔊</button></div>`).join("")}
+function saveName(){st.name=document.getElementById("nameInput").value.trim()||"زبان‌آموز";save();alert("نام ذخیره شد.")}
+function createAssignment(){let n=document.getElementById("assignName").value.trim()||"تکلیف جدید";document.getElementById("assignNotice").innerHTML=`<div class="notice success">✅ تکلیف «${n}» برای کلاس ساخته شد. در نسخه آنلاین به دیتابیس متصل می‌شود.</div>`}
+function resetApp(){if(confirm("پیشرفت این دستگاه پاک شود؟")){localStorage.removeItem("classEnglish");location.reload()}}
+update();
+</script>
+</body>
+</html>'''
+p=Path("/mnt/data/class-english.html")
+p.write_text(html,encoding="utf-8")
+print(p)
